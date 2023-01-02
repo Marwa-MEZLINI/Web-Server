@@ -1,15 +1,14 @@
-const createServer = require('http').createServer ;
+const http = require('http');
+const url = require('url');
 
-const server = createServer((req, res) => {
-    if (req.method === 'POST') {
-        const body = JSON.parse(req.body);
-    } 
-    else if (req.method === 'GET') {
-        const name = req.query.name;
-    }
-    
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'Hello, world!' }));
+const server = http.createServer((req, res) => {
+ 
+  const parsedUrl = url.parse(req.url, true);
+
+  if (req.method === 'GET' && parsedUrl.pathname === '/marwa') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello, Marwa!');
+  }
 });
 
 server.listen(3001, () => {
